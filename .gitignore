@@ -130,3 +130,6 @@ dmypy.json
 
 # Python virtual environment
 venv
+
+# Node Modules
+node_modules
