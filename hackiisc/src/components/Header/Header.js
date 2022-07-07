@@ -11,8 +11,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import logo from "../../icons/logo192.png";
+// stylesheets
 import styles from "./Header.module.css";
 
 const pages = ["Home", "About Us", "Login"];
@@ -44,16 +44,16 @@ const ResponsiveAppBar = () => {
         <Box
             component= "img"
             sx={{
-                display: { 
+                display: {
                     xs: "none",
-                    md: "flex" 
+                    md: "flex"
                 },
-                mr: 1 
+                mr: 1
             }}
             className = {styles.logo}
             alt = "logo"
             src = {logo}
-           /> 
+           />
           <Typography
             variant="h5"
             noWrap
@@ -110,17 +110,17 @@ const ResponsiveAppBar = () => {
           </Box>
           <Box
             component= "img"
-            sx={{ 
-                display: 
-                { xs: "flex", 
-                md: "none" 
+            sx={{
+                display:
+                { xs: "flex",
+                md: "none"
                 }
-                , mr: 1 
+                , mr: 1
             }}
             className = {styles.logo}
             alt = "logo"
             src = {logo}
-           /> 
+           />
           <Typography
             variant="h5"
             noWrap
