@@ -1,4 +1,4 @@
-# HackIISC
+# Karmath
 ## Dependencies
 Dependencies installation script ( Unix )
 ```sh
