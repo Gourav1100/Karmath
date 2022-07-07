@@ -1,21 +1,24 @@
 import React, {Component} from 'react';
+import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+// stylesheet
 import './App.css';
-import Button from '@material-ui/core/Button'; 
-  
+
 class App extends Component {
   render(){
     return (
-      <div className="App"> 
-        <br />
-        <Button variant="contained" color="primary" 
-                size="large">
-            GeeksforGeeks
-        </Button>     
-    </div>
-      
-    ); 
+      <Router>
+        <Routes>
+            <Route exact path='/' element={<Home />}></Route>
+            <Route exact path='/dashboard' element={<Dashboard />}></Route>
+            <Route exact path='/login' element={<Login />}></Route>
+          </Routes>
+      </Router>
+    );
   }
-   
+
 }
-  
+
 export default App;
