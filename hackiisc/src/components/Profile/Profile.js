@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Avatar, Typography, Divider, TextField } from "@mui/material";
+import { Grid, Avatar, Typography, Divider, TextField, Button } from "@mui/material";
 
 // stylesheets
 import styles from "./Profile.module.css";
@@ -45,6 +45,24 @@ export default function Profile(props){
         'Name2' : "Ashutosh Gangwar",
         'Name3' : "Ashutosh Gangwar",
     }
+    const HandleInput = (event) => {
+        let elements = document.getElementsByClassName("ProfileInputs");
+        for(let i = 0; i < elements.length; i++){
+            const value = elements[i].children[1].children[0].value;
+            if(value!="" && value!=null){
+                console.log("1");
+                setSubmit(true);
+                return true;
+            }
+        }
+        setSubmit(false);
+        return false;
+    }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(event);
+    }
+    const [submitState, setSubmit] = React.useState(false);
     return(
         <Grid  container maxWidth padding={{
             xs: 2,
@@ -127,17 +145,26 @@ export default function Profile(props){
                 <Typography variant="h5" padding={1}>
                     <b>Update Profile</b>
                 </Typography>
-                <Grid container maxWidth sx={{display: "flex"}} justifyContent="center" alignContent="center">
-                    {
-                    Object.keys(props.userdata?props.userdata:sampledata).map((key, index) =>{
-                        return(
-                            <Grid item sx={12} md={6} lg={4} padding={1} key={key}>
-                                <TextField name={key} sx={{width: "100%"}} id="outlined-basic" label={key} variant="outlined" />
-                            </Grid>
-                        );
-                    })
-                    }
-                </Grid>
+                <form style={{width: "100%"}}>
+                    <Grid container maxWidth sx={{display: "flex"}} justifyContent="center" alignContent="center">
+                        {
+                        Object.keys(props.userdata?props.userdata:sampledata).map((key, index) =>{
+                            return(
+                                <Grid item sx={12} md={6} lg={4} padding={1} key={key}>
+                                    <TextField className="ProfileInputs" name={key} sx={{width: "100%"}} id="outlined-basic" onKeyUp={HandleInput} label={key} variant="outlined" />
+                                </Grid>
+                            );
+                        })
+                        }
+                    </Grid>
+                    <Grid container maxWidth sx={{display: "flex"}} justifyContent="center" alignContent="center">
+                        <Grid item xs={12} md={6} lg={4} padding={1}>
+                            {
+                                submitState?(<Button className={styles.submitButton} onClick={handleSubmit} variant="contained">Submit</Button>):(<Button className={styles.submitButton} disabled variant="outlined">Submit</Button>)
+                            }
+                        </Grid>
+                    </Grid>
+                </form>
             </Grid>
         </Grid>
     );
