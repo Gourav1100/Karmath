@@ -14,8 +14,10 @@
 }
 
 .heading {
-    position: relative;
-    padding-bottom: 2px;
-    font-size: 30px;
+    position: absolute;
+    bottom: 0px;
+    /* padding-bottom: 2px; */
+    font-size: 50px;
+    color: purple;
     text-align: center;
 }

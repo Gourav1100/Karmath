@@ -1,21 +1,21 @@
 .top{
     padding-top: 50px;
     padding-left: 45px;
-    padding-right: 45px;
+    /* padding-right: 45px; */
     background-color: white;
     border-radius: 35px 35px 0 0 ;
 }
 
 .fit{
     padding-left: 45px;
-    padding-right: 45px;
+    /* padding-right: 45px; */
     padding-top: 20px;
     background-color: white;
 }
 
 .end{
     padding-left: 45px;
-    padding-right: 45px;
+    /* padding-right: 45px; */
     padding-top: 20px;
     padding-bottom: 50px ;
     background-color: white;

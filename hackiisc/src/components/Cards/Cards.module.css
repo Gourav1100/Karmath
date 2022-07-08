@@ -2,3 +2,16 @@
     height: 350px;
     width: 100%;
 }
+
+.heading{
+    text-align: center;
+    font-size: 30px;
+    color: #1976d2;
+    font-weight: 400;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.center{
+    margin: auto;
+    padding: auto;
+}

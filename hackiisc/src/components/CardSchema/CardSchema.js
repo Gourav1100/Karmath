@@ -7,7 +7,7 @@ export default function CardSchema(props) {
       className={styles.article}
       style={{ backgroundImage: `url(${props.src})` }}
     >
-      <h1 className={styles.heading}>React Is Awesome</h1>
+      <h1 className={styles.heading}>{props.text}</h1>
     </article>
   );
 }
