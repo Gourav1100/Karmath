@@ -131,7 +131,7 @@ export default function Profile(props){
                     {
                     Object.keys(props.userdata?props.userdata:sampledata).map((key, index) =>{
                         return(
-                            <Grid item sx={12} md={6} lg={4} padding={1}>
+                            <Grid item sx={12} md={6} lg={4} padding={1} key={key}>
                                 <TextField name={key} sx={{width: "100%"}} id="outlined-basic" label={key} variant="outlined" />
                             </Grid>
                         );
