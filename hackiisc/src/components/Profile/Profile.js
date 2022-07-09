@@ -50,7 +50,6 @@ export default function Profile(props){
         for(let i = 0; i < elements.length; i++){
             const value = elements[i].children[1].children[0].value;
             if(value!="" && value!=null){
-                console.log("1");
                 setSubmit(true);
                 return true;
             }
