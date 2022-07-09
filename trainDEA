@@ -2,5 +2,9 @@
 cd ./ExecuteDEA
 source environment/bin/activate
 python DEA.py
+cp ./RealSample.csv ../modules/result.csv
+cp ./karmath.* ../modules/
+rm -rf ./sample_rate
 rm -rf ./sample.csv
 rm -rf ./RealSample.csv
+rm -rf ./karmath.*

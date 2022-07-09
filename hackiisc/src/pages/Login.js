@@ -4,17 +4,27 @@ import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    window.sessionStorage.setItem("loginStatus", true);
-    console.log(event)
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    axios.post("http://localhost:5000/api/Database",{
+      data: {
+        action: "auth",
+        email: email,
+        password: password,
+      }
+    }).then((res)=>{
+      console.log(res);
+    })
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className={styles.center}>
         <h3>Sign in to your Karmath Account</h3>
         <Grid container maxWidth sx={{dispay: "flex"}} justifyContent="center" alignItems="center">
@@ -33,6 +43,7 @@ function Login() {
           <TextField
             name="password"
             label={"Password"}
+            type="password"
             sx={{
               display: "flex",
               marginBottom: 2,
@@ -48,7 +59,6 @@ function Login() {
             width: "70%",
             margin: 3
           }}
-          onClick={handleSubmit}
           >
             Sign IN
           </Button>
