@@ -14,8 +14,13 @@ class Home extends React.Component {
         <Header />
         <h1>Karmath</h1>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6} className = {styles.center}>
-          <h2>AI Model to find the efficiency of your employee</h2>
+          <Grid item xs={12} md={6}>
+            <div className={styles.main} id="place-main-center">
+            <h2>AI Model to find the efficiency of your employee</h2>
+          <h6>We help companies in finding the efficiency of their employees which help them to increase their productivity and can also select easily which user has to be given performance improvement plan.</h6>
+          <h6>An employee can also see where he or she stand in his or her company. They can check anytime in his branch or over all branches of the company globally, anytime through our evaluate performace tab given on the dashboard.</h6>
+            </div>
+          
           </Grid>
           <Grid item xs={12} md={6}>
               <MediaCard 
