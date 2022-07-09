@@ -1,17 +1,15 @@
 import React from "react";
-import Header from "../components/Header/Header";
-// stylesheets
-import styles from "./Home.module.css"
 import { Grid } from "@mui/material";
 import MediaCard from "../components/Cards/Cards";
 import image2 from "../images/image2.jpg";  
 import Button from '@mui/material/Button';
+// stylesheets
+import styles from "./Home.module.css"
 
 class Home extends React.Component {
   render() {
     return (
       <div >
-        <Header />
         <h1>Karmath</h1>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
@@ -59,8 +57,9 @@ class Home extends React.Component {
           
         </Grid>
 
-        
-
+      
+      
+      
       
       </div>
     );

@@ -1,11 +1,12 @@
 .center{
     padding: 3px;
     text-align: center;
-    margin: 13% 0 ;
+    margin: 7% 0 ;
 }
 
 h3{
     margin: 0;
+    margin-bottom: 12px;
     padding: 0;
     font-weight: 600;
     font-size: 22px;

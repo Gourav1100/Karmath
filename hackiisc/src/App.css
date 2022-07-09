@@ -5,3 +5,8 @@ body{
 .set{
     background-color: white;
 }
+
+html{
+    height: 100%;
+    position: relative;
+}

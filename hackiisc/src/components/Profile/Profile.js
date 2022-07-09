@@ -45,6 +45,12 @@ export default function Profile(props){
         'Name2' : "Ashutosh Gangwar",
         'Name3' : "Ashutosh Gangwar",
     }
+    const formArray = {
+        'Email' : "text",
+        'Password' : "password",
+        'Company' : "text",
+        'Location' : "text",
+    }
     const HandleInput = (event) => {
         let elements = document.getElementsByClassName("ProfileInputs");
         for(let i = 0; i < elements.length; i++){
@@ -147,10 +153,10 @@ export default function Profile(props){
                 <form style={{width: "100%"}}>
                     <Grid container maxWidth sx={{display: "flex"}} justifyContent="center" alignContent="center">
                         {
-                        Object.keys(props.userdata?props.userdata:sampledata).map((key, index) =>{
+                        Object.keys(props.userdata?props.userdata:formArray).map((key, index) =>{
                             return(
                                 <Grid item sx={12} md={6} lg={4} padding={1} key={key}>
-                                    <TextField className="ProfileInputs" name={key} sx={{width: "100%"}} id="outlined-basic" onKeyUp={HandleInput} label={key} variant="outlined" />
+                                    <TextField className="ProfileInputs" name={key} type={formArray[key]} sx={{width: "100%"}} id="outlined-basic" onKeyUp={HandleInput} label={key} variant="outlined" />
                                 </Grid>
                             );
                         })
