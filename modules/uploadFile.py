@@ -12,6 +12,7 @@ def execute(request, UPLOAD_FOLDER):
         return "No selected file"
     elif file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(UPLOAD_FOLDER, filename))
-        return "succes"
+        # file.save(os.path.join(UPLOAD_FOLDER, filename))      # use for multiple users
+        file.save(os.path.join(UPLOAD_FOLDER, 'sample.csv'))    # use for single user
+        return "success"
     return "failed"
