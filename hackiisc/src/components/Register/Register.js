@@ -7,8 +7,7 @@ import Grid from "@mui/material/Grid";
 function Register(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
-    sessionStorage.setItem("loginStatus", true);
-    console.log(event)
+    
   };
 
   return (
@@ -31,7 +30,7 @@ function Register(props) {
                 }}
               />
             ) : (<></>)}
-            
+
           <TextField
             name="companyName"
             label={"Company Name"}
@@ -81,7 +80,7 @@ function Register(props) {
                }}
              />
           ) : (<></>)}
-          
+
           <TextField
             name="email"
             label={"Email"}
@@ -107,7 +106,7 @@ function Register(props) {
             }}
           />
 
-          <Button 
+          <Button
           type="submit"
           variant="contained"
           style ={{
