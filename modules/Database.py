@@ -14,7 +14,7 @@ import json
 
 def insertToken(request):
     
-    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    conn = sqlite3.connect('./db.db')
     email = request['email']
     password = request['password']
     cursor = conn.execute("SELECT password FROM user WHERE email=\'" + email + '\'')
@@ -32,7 +32,7 @@ def insertToken(request):
         return token
 
 def validToken(request):
-    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    conn = sqlite3.connect('./db.db')
     email = request['email']
     token = request['token']
     cursor = conn.execute("SELECT * FROM validtokens WHERE token=\"" + str(token)+'\"')
@@ -48,7 +48,7 @@ def validToken(request):
     return True
 
 def createUser(request):
-    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    conn = sqlite3.connect('./db.db')
     print(request['name'])
     fields = f"\'{request['name']}\', \'{request['company']}\', \'{request['branch']}\', \'{request['domain']}\', {request['phone']}, \'{request['email']}\',\'{request['password']}\'"
     print(fields)
@@ -59,7 +59,7 @@ def createUser(request):
     return 'User Added Successfully'
 
 def getUser(request):
-    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    conn = sqlite3.connect('./db.db')
     cursor = conn.execute("SELECT * FROM user WHERE email=\'" + request['email']+ '\'')
     cursor = cursor.fetchall()
     if(len(cursor) == 0): return 'User does not exist', 404
@@ -75,7 +75,7 @@ def getUser(request):
     return json.dumps(dict, indent = 4)
 
 def createBranch(request):
-    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    conn = sqlite3.connect('./db.db')
     fields = f"\'{request['name']}\', \'{request['company']}\', \'{request['email']}\',\'{request['password']}\'"
     fieldlist = "name, company, email, password"
     req = "INSERT INTO branch(" + fieldlist + ") VALUES(" + fields + ")"
@@ -90,7 +90,7 @@ def createBranch(request):
     return 'Branch Added Successfully'
 
 def getBranch(request):
-    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    conn = sqlite3.connect('./db.db')
     cursor = conn.execute("SELECT * FROM branch WHERE email=\'" + request['email']+ '\'')
     cursor = cursor.fetchall()
     if(len(cursor) == 0): return 'Branch does not exist', 404
@@ -102,7 +102,7 @@ def getBranch(request):
     return json.dumps(dict, indent = 4)
 
 def getEfficiencyHistory(request):
-    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    conn = sqlite3.connect('./db.db')
     cursor = conn.execute("SELECT date, efficiency FROM branch WHERE email=\'" + request['email']+ '\' ORDER BY date ASC')
     cursor = cursor.fetchall()
     avg = 0
@@ -119,6 +119,7 @@ def getEfficiencyHistory(request):
     return json.dumps(dict)
 
 def execute(request):
+    print(request)
     req = request.get_json(force=True)
     print(req['action'])
     if(req['action'] == "auth"):
