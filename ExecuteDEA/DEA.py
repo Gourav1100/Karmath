@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
 #running DEA on sample file -> the file given by user
-os.system(""" python -m pyDEA.main "parameters.txt" "csv" "" "testing.csv" """)
+os.system(""" python -m pyDEA.main "parameters.txt" "csv" "" "sample.csv" """)
 
 #merge efficiency parameter to the sample file
 data1 = pd.read_csv('sample.csv')
@@ -56,6 +56,13 @@ classifier.add(Dense(units = 1, kernel_initializer = "uniform", activation = "si
 classifier.compile(optimizer= nadam(lr=0.001) ,loss=mse)
 # fit values and start training
 classifier.fit(xTrain,yTrain,batch_size=10,epochs = 1000)
+# print model summary
+print(classifier.summary())
+# store model to json
+json_model = classifier.to_json()
+with open( './karmath.json', 'w' ) as json_file:
+    json_file.write(json_model)
+classifier.save_weights('./karmath.h5')
 # predict testing data
 yPred = classifier.predict(xTest)
 # calculate error
