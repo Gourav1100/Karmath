@@ -7,6 +7,7 @@ import sqlite3
 import time
 import binascii
 import os
+from turtle import update
 from urllib import request
 import Oauth
 import json
@@ -58,6 +59,10 @@ def createUser(request):
     conn.commit()
     return 'User Added Successfully'
 
+def updateUser(request):
+    conn = sqlite3.connect('./db.db')
+    print(request['name'])
+
 def getUser(request):
     conn = sqlite3.connect('./db.db')
     cursor = conn.execute("SELECT * FROM user WHERE email=\'" + request['email']+ '\'')
@@ -102,8 +107,8 @@ def getBranch(request):
     return json.dumps(dict, indent = 4)
 
 def getEfficiencyHistory(request):
-    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
-    cursor = conn.execute("SELECT date, efficiency FROM branch WHERE email=\'" + request['email']+ '\' ORDER BY date ASC')
+    conn = sqlite3.connect('./db.db')
+    cursor = conn.execute("SELECT date, efficiency FROM history WHERE email=\'" + request['email']+ '\' ORDER BY date ASC')
     cursor = cursor.fetchall()
     avg = 0
     arr = []
@@ -119,7 +124,7 @@ def getEfficiencyHistory(request):
     return json.dumps(dict)
 
 def getCompanyComparision(request):
-    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    conn = sqlite3.connect('./db.db')
     cursor = conn.execute(f"SELECT * FROM branch WHERE email='{request['email']}'")
     cursor = cursor.fetchone()
     table = cursor[1] + "_" + cursor[0]
@@ -137,7 +142,36 @@ def getCompanyComparision(request):
     return json.dumps(dict)
 
 def getEfficiencyComparision(request):
-
+    conn = sqlite3.connect('./db.db')
+    cursor = conn.execute(f"SELECT efficiency FROM history WHERE email='{request['email']}' ORDER BY date DSC LIMIT 1")
+    cursor = cursor.fetchone()
+    myeff = cursor[0]
+    cursor = conn.execute(f"SELECT branch, company FROM user WHERE email='{request['email']}'")
+    cursor = cursor.fetchone()
+    branch = cursor[0]
+    company = cursor[1]
+    comp = company + "_" + branch
+    arr = []
+    cursor = conn.execute(f"SELECT efficiency FROM {comp} WHERE efficiency<{myeff}")
+    cursor.fetchall()
+    i = 0
+    while i < len(cursor):
+        d = {"EmpID" : i, "Efficiency": cursor[i][0]}
+        arr.append(d)
+        i += 1
+    dic = {"EmpID": i, "Efficiency": myeff, "rng" : 5}
+    arr.append(dic)
+    i +=1
+    j = 0
+    cursor = conn.execute(f"SELECT efficiency FROM {comp} WHERE efficiency > {myeff}")
+    cursor.fetchall()
+    while j < len(cursor):
+        d = {"EmpID" : i, "Efficiency": cursor[i][0]}
+        arr.append(d)
+        i += 1
+        j += 1
+    dict = {"data": arr}
+    return json.dumps(dict)
 
 def execute(request):
     print(request)
@@ -151,6 +185,7 @@ def execute(request):
         if validToken(req) == False: return "Invalid Auth Token!", 401
         if req['action'] == 'getUser' : return getUser(req)
         if req['action'] == 'getBranch' : return getBranch(req)
+        if req['action'] == 'getEfficiencyHistory': return getEfficiencyHistory(req)
     return "FAILED"
 
 
