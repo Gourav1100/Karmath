@@ -1,4 +1,5 @@
 import sys
+from unittest import result
 from flask import *
 # add modules path to Python paths
 sys.path.insert(0, './modules')
@@ -6,10 +7,11 @@ sys.path.insert(0, './modules')
 app = Flask(__name__)
 
 @app.route("/api/<api>", methods=["GET", "POST"])
-def executeAPI(api):
+async def executeAPI(api):
     try:
         apiHandler = __import__(api)
-        return apiHandler.execute(request)
+        result = await apiHandler.execute(request)
+        return result
     except ImportError:
         print(f"Unable to import {api}.")
         return "Error in server"
