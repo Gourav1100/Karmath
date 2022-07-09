@@ -4,6 +4,7 @@ import MediaCard from "../components/Cards/Cards";
 import image2 from "../images/image2.jpg";
 import image1 from "../images/image1.jpg"  
 import Button from '@mui/material/Button';
+import { Link } from "@material-ui/core";
 // stylesheets
 import styles from "./Home.module.css"
 
@@ -49,13 +50,13 @@ their performance.</h6>
               <h5>For Companies</h5>
               <p>We help companies in finding the efficiency of their employees which help them to increase their productivity and can also select easily which user has to be given performance improvement plan.</p>
               <br />
-              <Button variant="outlined">Login as Company</Button>
+              <Button variant="outlined"><Link href = "/login" >Register as Company</Link></Button>
             </Grid>
             <Grid item xs = {6} md={6} className={styles.put}>
               <h5>For Employees</h5>
               <p>We help employees to find out where they stand in their company both branch wise and globally over all branches of company so that they can improve their performance, anytime through our evaluate performace tab in the dashboard.</p>
               <br />
-              <Button variant="outlined">Login as Employee</Button>
+              <Button variant="outlined"><Link href = "/login" >Register as Employee</Link></Button>
             </Grid>
           </Grid>
           
