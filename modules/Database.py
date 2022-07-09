@@ -103,7 +103,7 @@ def getBranch(request):
 
 def getEfficiencyHistory(request):
     conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
-    cursor = conn.execute("SELECT date, efficiency FROM branch WHERE email=\'" + request['email']+ '\' ORDER BY date ASC')
+    cursor = conn.execute("SELECT date, efficiency FROM history WHERE email=\'" + request['email']+ '\' ORDER BY date ASC')
     cursor = cursor.fetchall()
     avg = 0
     arr = []
@@ -117,6 +117,27 @@ def getEfficiencyHistory(request):
        avg/=len(cursor)
     dict = {"avg" : avg, "data": arr}
     return json.dumps(dict)
+
+def getCompanyComparision(request):
+    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    cursor = conn.execute(f"SELECT * FROM branch WHERE email='{request['email']}'")
+    cursor = cursor.fetchone()
+    table = cursor[1] + "_" + cursor[0]
+    branchavg = cursor[5]
+    cursor = conn.execute(f"SELECT average FROM company WHERE name='{cursor[1]}'")
+    cursor = cursor.fetchone()
+    compavg = cursor[0]
+    cursor = conn.execute(f"SELECT efficiency FROM {table} ORDER BY efficiency ASC")
+    arr=[]
+    cursor = cursor.fetchall()
+    for i in range(0, len(cursor)):
+        d = {"EmpID": i, "Efficiency": cursor[i][0]}
+        arr.append(d)
+    dict = {"data":arr, "branch": branchavg, "company": compavg}
+    return json.dumps(dict)
+
+def getEfficiencyComparision(request):
+
 
 def execute(request):
     req = request.get_json(force=True)
