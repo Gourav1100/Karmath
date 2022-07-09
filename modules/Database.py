@@ -1,4 +1,5 @@
 from dataclasses import field, fields
+from datetime import datetime
 from getpass import getuser
 from itertools import filterfalse
 from pickle import TRUE
@@ -99,6 +100,23 @@ def getBranch(request):
         'Email': cursor[0][2]
     }
     return json.dumps(dict, indent = 4)
+
+def getEfficiencyHistory(request):
+    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    cursor = conn.execute("SELECT date, efficiency FROM branch WHERE email=\'" + request['email']+ '\' ORDER BY date ASC')
+    cursor = cursor.fetchall()
+    avg = 0
+    arr = []
+    i = 0
+    while i < len(cursor):
+        avg = avg + cursor[i][1]
+        d = {'date': cursor[i][0], 'Efficiency': cursor[i][1]}
+        arr.append(d)
+        i = i + 1
+    if len(cursor)>0:
+       avg/=len(cursor)
+    dict = {"avg" : avg, "data": arr}
+    return json.dumps(dict)
 
 def execute(request):
     req = request.get_json(force=True)
