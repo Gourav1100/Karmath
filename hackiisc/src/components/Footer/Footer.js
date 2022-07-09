@@ -12,14 +12,9 @@ class Footer extends React.Component {
       <div className={styles.footer}>
         <Grid container>
           <Grid item xs={12} md={8}>
-            <p style={{ color: "white", padding: "30px" }}>
-              We help companies in finding the efficiency of their employees
-              which help them to increase their productivity and can also select
-              easily which user has to be given performance improvement plan. An
-              employee can also see where he or she stand in his or her company.
-              They can check anytime in his branch or over all branches of the
-              company globally, anytime through our evaluate performace tab
-              given on the dashboard.
+            <h2 style ={{color: "white", fontSize: "40px"}}>Made with Love</h2>
+            <p style={{ color: "white", paddingLeft: "40%" }}>
+              - ManchurianHotdogs
             </p>
           </Grid>
           <Grid
