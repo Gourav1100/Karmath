@@ -7,13 +7,13 @@ sys.path.insert(0, './modules')
 app = Flask(__name__)
 
 @app.route("/api/<api>", methods=["GET", "POST"])
-async def executeAPI(api):
+def executeAPI(api):
     try:
         apiHandler = __import__(api)
-        result = await apiHandler.execute(request)
+        result = apiHandler.execute(request)
         return result
     except ImportError:
-        print(f"Unable to import {api}.")
+        print("Unable to import API.")
         return "Error in server"
     except:
         print("Error in server")
