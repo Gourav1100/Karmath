@@ -85,6 +85,7 @@ function Register(props) {
           <TextField
             name="email"
             label={"Email"}
+            type="email"
             sx={{
               display: "flex",
               marginTop: 2,
@@ -96,6 +97,7 @@ function Register(props) {
           <TextField
             name="password"
             label={"Password"}
+            type="password"
             sx={{
               display: "flex",
               marginTop: 2,
