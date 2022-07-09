@@ -24,7 +24,7 @@ class App extends Component {
           </Routes>
          <Footer />
       </Router>
-      
+
     );
   }
 
