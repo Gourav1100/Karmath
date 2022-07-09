@@ -25,6 +25,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import PerformanceForm from "../components/PerformanceForm/PerformanceForm";
 // stylesheets
 import styles from "./Dashboard.module.css";
 
@@ -34,7 +35,7 @@ const Dashboard = () => {
         'Home': [<HomeOutlinedIcon />, ""],
         'My Profile': [<PersonOutlineIcon />, <Profile />],
         'My Progess' : [<WorkOutlineIcon />, "You Progress"],
-        'Evaluate your Performance' : [<BarChartIcon />, "Evaluate Your performance"],
+        'Evaluate your Performance' : [<BarChartIcon />, <PerformanceForm /> ],
         'Logout' : [<LogoutIcon />, ""]
     };
     const theme = useTheme();

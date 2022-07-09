@@ -1,15 +1,15 @@
 import React from "react";
 import styles from "./Login.module.css";
 import { TextField } from "@mui/material";
-import { useState } from "react";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import { Link } from "react-router-dom";
 
 function Login() {
-  const [textValue, setTextValue] = useState("");
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
+    window.sessionStorage.setItem("loginStatus", true);
     console.log(event)
   };
 
@@ -59,7 +59,7 @@ function Login() {
             margin: 3
           }}
           >
-            Register as Company
+            <Link to="/registercompany" style={{ textDecoration: 'none', color: 'white' }}>Register as Company</Link>
           </Button>
           <Button 
           variant="contained"
@@ -68,7 +68,7 @@ function Login() {
             margin: 3
           }}
           >
-            Register as employee
+            <Link to="/registeremployee" style={{ textDecoration: 'none', color: 'white' }}>Register as employee</Link>
           </Button>
           </Grid>
           </Grid>

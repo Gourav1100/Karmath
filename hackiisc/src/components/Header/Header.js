@@ -16,10 +16,10 @@ import logo from "../../icons/logo192.png";
 // stylesheets
 import styles from "./Header.module.css";
 
-const pages = ["Home", "About Us", "Login"];
+const pages = ["Home", "About Us"];
 const settings = ["Dashboard", "Logout"];
 
-const ResponsiveAppBar = () => {
+const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -37,7 +37,11 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  let isUserLoggedin = false;
+  var loginStatus = sessionStorage.getItem("loginStatus");
+  if(loginStatus){
+    isUserLoggedin = true;
+  }
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -105,10 +109,18 @@ const ResponsiveAppBar = () => {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                  <Link to = {`/${page}`} style={{ textDecoration: 'none', color: 'white' }}>{page}</Link>
+                  <Link to = {`/${page}`} style={{ textDecoration: 'none', color: '#1976d2' }}>{page}</Link>
                     </Typography>
                 </MenuItem>
               ))}
+              {!isUserLoggedin ? (
+                 <MenuItem>
+                 <Typography textAlign="center">
+                 <Link to = "/login" style={{ textDecoration: 'none', color: '#1976d2' }}>Login</Link>
+                   </Typography>
+                 </MenuItem>
+              ): (<></>)}
+             
             </Menu>
           </Box>
           <Box
@@ -150,17 +162,26 @@ const ResponsiveAppBar = () => {
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 <Link to = {`/${page}`} style={{ textDecoration: 'none', color: 'white'}}>{page}</Link>
-                {/* {page} */}
               </Button>
             ))}
+            {!isUserLoggedin ? (<Button
+                key="Login"
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "black", display: "block" }}
+              >
+                <Link to = "/login" style={{ textDecoration: 'none', color: 'white'}}>Login</Link>
+              </Button>):(<></>)}
+            
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User Name" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {isUserLoggedin?(
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="User Name" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+            ):(<></>)}
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -190,4 +211,4 @@ const ResponsiveAppBar = () => {
     </AppBar>
   );
 };
-export default ResponsiveAppBar;
+export default Header;
