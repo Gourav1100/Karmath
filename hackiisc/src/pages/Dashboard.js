@@ -28,6 +28,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import PerformanceForm from "../components/PerformanceForm/PerformanceForm";
 // stylesheets
 import styles from "./Dashboard.module.css";
+import Footer from "../components/Footer/Footer";
 
 const Dashboard = () => {
     // set variables and hooks
@@ -35,7 +36,7 @@ const Dashboard = () => {
         'Home': [<HomeOutlinedIcon />, ""],
         'My Profile': [<PersonOutlineIcon />, <Profile />],
         'My Progess' : [<WorkOutlineIcon />, "You Progress"],
-        'Evaluate your Performance' : [<BarChartIcon />, <PerformanceForm /> ],
+        'Evaluate your Performance' : [<BarChartIcon />, <PerformanceForm type="Employee" /> ],
         'Logout' : [<LogoutIcon />, ""]
     };
     const theme = useTheme();
@@ -90,7 +91,7 @@ const Dashboard = () => {
             >
             <MenuIcon />
             </IconButton>
-            <Breadcrumbs aria-label="breadcrumb" color="white" variant="h6" separator=">">
+            <Breadcrumbs aria-label="breadcrumb" color="white" variant="h6" separator=">" padding={1}>
                 <Link underline="hover" color="inherit" href="/dashboard">
                     Dashboard
                 </Link>
@@ -120,7 +121,7 @@ const Dashboard = () => {
         <List>
             {
                 Object.keys(locations).map((key) => (
-                <ListItem key={key} disablePadding onClick={()=>{
+                <ListItem key={key} Padding={1} onClick={()=>{
                     handleContent(key);
                 }}>
                     <ListItemButton>
@@ -140,6 +141,7 @@ const Dashboard = () => {
         {
             locations[location][1]
         }
+        <Footer className={styles.foot} />
         </Main>
     </Box>
     );
@@ -185,7 +187,7 @@ const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open',
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'center',   
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,

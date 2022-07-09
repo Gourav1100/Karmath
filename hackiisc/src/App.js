@@ -15,14 +15,13 @@ class App extends Component {
       <Router>
         <Header />
         <Routes>
-            <Route exact path='/' element={<Home />}></Route>
-            <Route exact path='/Home' element={<Home />}></Route>
+            <Route exact path='/' element={(<><Home /><Footer /></>)}></Route>
+            <Route exact path='/Home' element={(<><Home /> <Footer /></>)}></Route>
             <Route exact path='/dashboard' element={<Dashboard />}></Route>
-            <Route exact path='/login' element={<Login />}></Route>
-            <Route exact path='/registercompany'  element = {<Register type = "Company"/>}> </Route>
-            <Route exact path='/registeremployee'  element = {<Register type = "Employee"/>}> </Route>
+            <Route exact path='/login' element={(<><Login /><Footer/></>)}></Route>
+            <Route exact path='/registercompany'  element = {(<><Register type = "Company"/><Footer /></>)}> </Route>
+            <Route exact path='/registeremployee'  element = {(<><Register type = "Employee"/><Footer /></>)}> </Route>
           </Routes>
-         <Footer />
       </Router>
       
     );

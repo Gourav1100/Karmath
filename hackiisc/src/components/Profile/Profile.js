@@ -156,7 +156,7 @@ export default function Profile(props){
                         Object.keys(props.userdata?props.userdata:formArray).map((key, index) =>{
                             return(
                                 <Grid item sx={12} md={6} lg={4} padding={1} key={key}>
-                                    <TextField className="ProfileInputs" name={key} type={formArray[key]} sx={{width: "100%"}} id="outlined-basic" onKeyUp={HandleInput} label={key} variant="outlined" />
+                                    <TextField className="ProfileInputs" name={key} type={formArray[key]} sx={{width: "100%"}}  onKeyUp={HandleInput} label={key} variant="outlined" />
                                 </Grid>
                             );
                         })
