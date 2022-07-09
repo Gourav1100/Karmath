@@ -1,6 +1,7 @@
-from dataclasses import fields
+from dataclasses import field, fields
 from getpass import getuser
 from itertools import filterfalse
+from pickle import TRUE
 import sqlite3
 import time
 import binascii
@@ -11,8 +12,14 @@ import json
 
 
 def insertToken(request):
+    
     conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
-    email = request.json().body.email
+    email = request['email']
+    password = request['password']
+    cursor = conn.execute("SELECT password FROM user WHERE email=\'" + email + '\'')
+    cursor = cursor.fetchall()
+    if len(cursor) == 0: return 'User not Found!', 404 
+    if cursor[0][0] != password: return 'Incorrect! Password', 401
     token = Oauth.getToken()
     cursor = conn.execute("SELECT * FROM validtokens WHERE token=\"" + str(token)+'\"')
     cursor  = cursor.fetchall()
@@ -25,8 +32,8 @@ def insertToken(request):
 
 def validToken(request):
     conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
-    email = request.json().body.email
-    token = request.json().token
+    email = request['email']
+    token = request['token']
     cursor = conn.execute("SELECT * FROM validtokens WHERE token=\"" + str(token)+'\"')
     cursor  = cursor.fetchall()
     if(len(cursor) == 0):
@@ -41,20 +48,22 @@ def validToken(request):
 
 def createUser(request):
     conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
-    temp = request.json().body
-    fields = f"\'{temp.name}\', \'{temp.company}\', \'{temp.branch}\', \'{temp.domain}\', \'{temp.phone}\', \'{temp.email}\',\'{temp.password}\'"
+    print(request['name'])
+    fields = f"\'{request['name']}\', \'{request['company']}\', \'{request['branch']}\', \'{request['domain']}\', {request['phone']}, \'{request['email']}\',\'{request['password']}\'"
+    print(fields)
     fieldlist = "name, company, branch, domain, phone, email, password"
     req = "INSERT INTO user(" + fieldlist + ") VALUES(" + fields + ")"
     conn.execute(req)
     conn.commit()
+    return 'User Added Successfully'
 
 def getUser(request):
     conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
-    temp = request.json()
-    cursor = conn.execute("SELECT * FROM user WHERE email=\'" + temp.body.email + '\'')
+    cursor = conn.execute("SELECT * FROM user WHERE email=\'" + request['email']+ '\'')
     cursor = cursor.fetchall()
-    if(len(cursor) == 0): return False
+    if(len(cursor) == 0): return 'User does not exist', 404
     dict = {
+
         'Name' : cursor[0][1],
         'Company': cursor[0][2],
         'Branch': cursor[0][3],
@@ -64,8 +73,45 @@ def getUser(request):
     }
     return json.dumps(dict, indent = 4)
 
-def execute(request):
-    body = request.json().body
-    action = request.json().action
+def createBranch(request):
+    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    fields = f"\'{request['name']}\', \'{request['company']}\', \'{request['email']}\',\'{request['password']}\'"
+    fieldlist = "name, company, email, password"
+    req = "INSERT INTO branch(" + fieldlist + ") VALUES(" + fields + ")"
+    conn.execute(req)
+    conn.commit()
+    cursor = conn.execute("SELECT * FROM company WHERE name=\'" + request['company'] + '\'')
+    print(fields)
+    cursor = cursor.fetchall()
+    if len(cursor) == 0:
+        conn.execute("INSERT INTO company(name) VALUES(\'" + request['company'] + "\')")
+        conn.commit()
+    return 'Branch Added Successfully'
 
-print(getUser(123))
+def getBranch(request):
+    conn = sqlite3.connect('G:/HackIISC/HackIISC/modules/db.db')
+    cursor = conn.execute("SELECT * FROM branch WHERE email=\'" + request['email']+ '\'')
+    cursor = cursor.fetchall()
+    if(len(cursor) == 0): return 'Branch does not exist', 404
+    dict = {
+        'Name' : cursor[0][0],
+        'Company': cursor[0][1],
+        'Email': cursor[0][2]
+    }
+    return json.dumps(dict, indent = 4)
+
+def execute(request):
+    req = request.get_json(force=True)
+    print(req['action'])
+    if(req['action'] == "auth"):
+        return insertToken(req)
+    if req['action'] == 'createUser': return createUser(req)
+    if req['action'] == 'createBranch': return createBranch(req)
+    else:
+        if validToken(req) == False: return "Invalid Auth Token!", 401
+        if req['action'] == 'getUser' : return getUser(req)
+        if req['action'] == 'getBranch' : return getBranch(req)
+    return "FAILED"
+
+
+    

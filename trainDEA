@@ -1,0 +1,6 @@
+#!/bin/sh
+cd ./ExecuteDEA
+source environment/bin/activate
+python DEA.py
+rm -rf ./sample.csv
+rm -rf ./RealSample.csv
