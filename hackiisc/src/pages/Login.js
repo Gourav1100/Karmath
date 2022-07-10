@@ -4,17 +4,40 @@ import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    window.sessionStorage.setItem("loginStatus", true);
-    console.log(event)
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    event.target.email.value = "";
+    event.target.password.value = "";
+    axios.post("http://localhost:5000/api/Database",{
+      action: "auth",
+      email: email,
+      password: password,
+    }).then((res)=>{
+      if(res.data && res.status === 200){
+        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("loginStatus", true);
+        sessionStorage.setItem("authToken", res.data.token);
+        sessionStorage.setItem("src", res.data.src);
+        window.location.replace("/dashboard");
+      }
+      else if(res.status === 401){
+        alert("Invalid user details!");
+        sessionStorage.clear();
+      }
+    })
   };
-
+  let status = sessionStorage.getItem("loginStatus")
+  if(status === 'true'){
+    window.location.replace("/dashboard")
+  }
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className={styles.center}>
         <h3>Sign in to your Karmath Account</h3>
         <Grid container maxWidth sx={{dispay: "flex"}} justifyContent="center" alignItems="center">
@@ -33,6 +56,7 @@ function Login() {
           <TextField
             name="password"
             label={"Password"}
+            type="password"
             sx={{
               display: "flex",
               marginBottom: 2,
@@ -41,18 +65,17 @@ function Login() {
             }}
           />
 
-          <Button 
+          <Button
           type="submit"
           variant="contained"
           style ={{
             width: "70%",
             margin: 3
           }}
-          onClick={handleSubmit}
           >
             Sign IN
           </Button>
-          <Button 
+          <Button
           variant="contained"
           style ={{
             width: "70%",
@@ -61,7 +84,7 @@ function Login() {
           >
             <Link to="/registercompany" style={{ textDecoration: 'none', color: 'white' }}>Register as Company</Link>
           </Button>
-          <Button 
+          <Button
           variant="contained"
           style ={{
             width: "70%",

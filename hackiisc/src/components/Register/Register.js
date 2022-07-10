@@ -3,17 +3,42 @@ import styles from "../../pages/Login.module.css";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import axios from "axios";
 
 function Register(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
-    sessionStorage.setItem("loginStatus", true);
-    console.log(event)
+    const settings = props.type==="Employee"?{
+      action: 'createUser',
+      name: event.target.name.value,
+      company: event.target.company.value,
+      branch: event.target.branch.value,
+      domain: event.target.domain.value,
+      phone: event.target.phone.value,
+      email: event.target.email.value,
+      password: event.target.password.value,
+    }:{
+      action: 'createBranch',
+      name: event.target.branch.value,
+      company: event.target.company.value,
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+    console.log(settings)
+    axios.post("http://localhost:5000/api/Database",settings).then((res)=>{
+      if(res.status === 200){
+        window.location.replace("/login");
+      }
+      else{
+        alert(res.data);
+        window.location.reload();
+      }
+    });
   };
 
   return (
     <div>
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className={styles.center}>
         <h3>Register as {props.type}</h3>
         <Grid container maxWidth sx={{dispay: "flex"}} justifyContent="center" alignItems="center">
@@ -31,9 +56,9 @@ function Register(props) {
                 }}
               />
             ) : (<></>)}
-            
+
           <TextField
-            name="companyName"
+            name="company"
             label={"Company Name"}
             sx={{
               display: "flex",
@@ -44,7 +69,7 @@ function Register(props) {
             }}
           />
           <TextField
-            name="Branch"
+            name="branch"
             label={"Company Branch"}
             sx={{
               display: "flex",
@@ -70,7 +95,7 @@ function Register(props) {
 
           {(props.type === "Employee") ? (
                <TextField
-               name="phoneNumber"
+               name="phone"
                label={"Phone Number"}
                sx={{
                  display: "flex",
@@ -81,7 +106,7 @@ function Register(props) {
                }}
              />
           ) : (<></>)}
-          
+
           <TextField
             name="email"
             label={"Email"}
@@ -107,14 +132,13 @@ function Register(props) {
             }}
           />
 
-          <Button 
+          <Button
           type="submit"
           variant="contained"
           style ={{
             width: "70%",
             margin: 2
           }}
-          onClick={handleSubmit}
           >
             Register as {props.type}
           </Button>

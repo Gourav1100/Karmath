@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Resources.module.css";
 
 class Resources extends React.Component {
+  
   render() {
     return (
       <>

@@ -29,31 +29,66 @@ import PerformanceForm from "../components/PerformanceForm/PerformanceForm";
 // stylesheets
 import styles from "./Dashboard.module.css";
 import Footer from "../components/Footer/Footer";
+import axios from "axios";
+import Progress from "../components/progress/progress";
 
 const Dashboard = () => {
     // set variables and hooks
-    const locations = {
-        'Home': [<HomeOutlinedIcon />, ""],
-        'My Profile': [<PersonOutlineIcon />, <Profile />],
-        'My Progess' : [<WorkOutlineIcon />, "You Progress"],
-        'Evaluate your Performance' : [<BarChartIcon />, <PerformanceForm type="Employee" /> ],
-        'Logout' : [<LogoutIcon />, ""]
-    };
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [location, setLocation] = React.useState("My Profile");
-    const [auth, setAuth] = React.useState(true);
+    const [auth, setAuth] = React.useState(false);
+    const [userdata, setUserdata] = React.useState({});
     const loginStatus = sessionStorage.getItem("loginStatus");
     const token = sessionStorage.getItem("authToken");
     // validate login state
-    if( token === "" || token === null || loginStatus === false || loginStatus === null || loginStatus === "" ){
+    if( token === "" || token === null || loginStatus !== 'true' ){
         sessionStorage.clear();
         window.location.replace("/");
         return (<>Unauthenticated access!!</>);
     }
     // authenticate user
     {/* authentication request here */}
-    if( auth === false){
+    if( auth === false ){
+        if(sessionStorage.getItem('src') === "user"){
+            axios.post("http://localhost:5000/api/Database",{
+                action: "getUser",
+                email: sessionStorage.getItem("email"),
+                token: sessionStorage.getItem("authToken"),
+            }).then((res)=>{
+                if(res.status === 200){
+                    setAuth(true);
+                    setUserdata(res.data);
+                }
+                else {
+                    sessionStorage.clear();
+                    window.location.replace("/");
+                    return (<>Unauthenticated Access!!</>)
+                }
+            });
+        }
+        else if(sessionStorage.getItem('src') === "branch"){
+            axios.post("http://localhost:5000/api/Database",{
+                action: "getBranch",
+                email: sessionStorage.getItem("email"),
+                token: sessionStorage.getItem("authToken"),
+            }).then((res)=>{
+                if(res.status === 200){
+                    setAuth(true);
+                    setUserdata(res.data);
+                }
+                else{
+                    sessionStorage.clear();
+                    window.location.replace("/");
+                    return (<>Unauthenticated Access!!</>)
+                }
+            });
+        }
+        else {
+            sessionStorage.clear();
+            window.location.replace("/");
+            return (<>Unauthenticated Access!!</>)
+        }
         return (<>Authentication in process please wait.</>);
     }
     // handler functions
@@ -76,6 +111,13 @@ const Dashboard = () => {
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+    const locations = {
+        'Home': [<HomeOutlinedIcon />, ""],
+        'My Profile': [<PersonOutlineIcon />, <Profile userdata = {userdata} />],
+        'My Progess' : [<WorkOutlineIcon />, <Progress />],
+        'Evaluate your Performance' : [<BarChartIcon />, <PerformanceForm type={sessionStorage.getItem('src')==="branch"?'Company':'Employee'} /> ],
+        'Logout' : [<LogoutIcon />, ""]
     };
     return (
     <Box sx={{ display: 'flex' }} className={styles.Dashboard}>
@@ -187,7 +229,7 @@ const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open',
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
-    alignItems: 'center',   
+    alignItems: 'center',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,

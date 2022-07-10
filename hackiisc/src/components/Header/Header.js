@@ -17,7 +17,6 @@ import logo from "../../icons/logo192.png";
 import styles from "./Header.module.css";
 
 const pages = ["Home", "About Us"];
-const settings = ["Dashboard", "Logout"];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -33,7 +32,10 @@ const Header = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  const logout = () =>{
+    sessionStorage.clear();
+    window.location.replace("/");
+  }
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -120,7 +122,7 @@ const Header = () => {
                    </Typography>
                  </MenuItem>
               ): (<></>)}
-             
+
             </Menu>
           </Box>
           <Box
@@ -171,7 +173,7 @@ const Header = () => {
               >
                 <Link to = "/login" style={{ textDecoration: 'none', color: 'white'}}>Login</Link>
               </Button>):(<></>)}
-            
+
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -198,12 +200,15 @@ const Header = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">
-                    <Link to = {`/${setting}`} style={{ textDecoration: 'none', color: 'black' }}>{setting}</Link></Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">
+                  <Link to = {`/dashboard`} style={{ textDecoration: 'none', color: 'black' }}>Dashboard</Link></Typography>
+              </MenuItem>
+              <MenuItem onClick={logout}>
+                <Typography textAlign="center">
+                  Logout
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
