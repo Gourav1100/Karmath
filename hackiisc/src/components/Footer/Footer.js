@@ -14,7 +14,7 @@ class Footer extends React.Component {
           <Grid item xs={12} md={8}>
             <h2 style ={{color: "white", fontSize: "40px"}}>Made with Love</h2>
             <p style={{ color: "white", paddingLeft: "40%" }}>
-              - ManchurianHotdogs
+              - ManchurianHotdog
             </p>
           </Grid>
           <Grid

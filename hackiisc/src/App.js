@@ -9,6 +9,7 @@ import Header from './components/Header/Header';
 import Resources from './pages/Resources';
 // stylesheet
 import './App.css';
+import AboutUs from './pages/AboutUs';
 
 class App extends Component {
   render(){
@@ -23,6 +24,7 @@ class App extends Component {
             <Route exact path='/registercompany'  element = {(<><Register type = "Company"/><Footer /></>)}> </Route>
             <Route exact path='/registeremployee'  element = {(<><Register type = "Employee"/><Footer /></>)}> </Route>
             <Route exact path='/resources'  element = {(<><Resources/><Footer /></>)}> </Route>
+            <Route exact path='/About%20Us'  element = {(<><AboutUs/><Footer /></>)}> </Route>
           </Routes>
       </Router>
       
