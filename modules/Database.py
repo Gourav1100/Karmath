@@ -17,12 +17,14 @@ def insertToken(request):
 
     conn = sqlite3.connect('./db.db')
     email = request['email']
+    source = 'user'
     password = request['password']
     cursor = conn.execute("SELECT password FROM user WHERE email=\'" + email + '\'')
     cursor = cursor.fetchall()
     if len(cursor) == 0:
         cursor = conn.execute("SELECT password FROM branch WHERE email=\'" + email + '\'')
         cursor = cursor.fetchall()
+        source = 'branch'
         if len(cursor) == 0:  return 'User not Found!', 404
     if cursor[0][0] != password: return 'Incorrect! Password', 401
     token = Oauth.getToken()
@@ -33,7 +35,8 @@ def insertToken(request):
     else:
         conn.execute("INSERT INTO validtokens VALUES (\"" + token+"\"," + str(int(time.time())) + ","+ str(int(time.time() + 3600)) +",\""+ email +"\")")
         conn.commit()
-        return token
+        dict = {"token": token, "src": source}
+        return json.dumps(dict)
 
 def validToken(request):
     conn = sqlite3.connect('./db.db')
@@ -103,7 +106,7 @@ def getBranch(request):
     cursor = cursor.fetchall()
     if(len(cursor) == 0): return 'Branch does not exist', 404
     dict = {
-        'Name' : cursor[0][0],
+        'Branch' : cursor[0][0],
         'Company': cursor[0][1],
         'Email': cursor[0][2]
     }
