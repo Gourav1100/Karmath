@@ -1,5 +1,6 @@
 from werkzeug.utils import secure_filename
 import os
+import csvDB
 
 ALLOWED_EXTENSIONS = {'csv'}
 
@@ -15,5 +16,6 @@ def execute(request, UPLOAD_FOLDER):
         # file.save(os.path.join(UPLOAD_FOLDER, filename))      # use for multiple users
         file.save(os.path.join(UPLOAD_FOLDER, 'sample.csv'))    # use for single user
         os.system("sh ./trainDEA")
+        csvDB.execute(request)
         return "success"
     return "failed"
