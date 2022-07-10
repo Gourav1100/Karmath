@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from werkzeug.utils import secure_filename
 import os
 
@@ -19,6 +20,8 @@ def execute(request, UPLOAD_FOLDER):
         return "success"
     return "failed"
 =======
+=======
+>>>>>>> 8c665c01457b4a78d3ed10cb4f9fdfb32b6d9ff3
 from werkzeug.utils import secure_filename
 import os
 
@@ -38,4 +41,7 @@ def execute(request, UPLOAD_FOLDER):
         os.system("sh ./trainDEA")
         return "success"
     return "failed"
+<<<<<<< HEAD
+>>>>>>> 8c665c01457b4a78d3ed10cb4f9fdfb32b6d9ff3
+=======
 >>>>>>> 8c665c01457b4a78d3ed10cb4f9fdfb32b6d9ff3
