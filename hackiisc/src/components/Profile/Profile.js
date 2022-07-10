@@ -1,8 +1,10 @@
 import * as React from "react";
 import { Grid, Avatar, Typography, Divider, TextField, Button } from "@mui/material";
-
+import EfficiencyHistory from "../Charts/EfficiencyHistory";
+import CompanyComparision from "../Charts/CompanyComparision";
 // stylesheets
 import styles from "./Profile.module.css";
+import axios from "axios";
 
 function stringToColor(string) {
     let hash = 0;
@@ -58,6 +60,17 @@ export default function Profile(props){
         event.preventDefault();
         console.log(event.target);
     }
+    const [graphData, setGraph] = React.useState([])
+    axios.post("http://localhost:5000/api/Database",{
+        action: sessionStorage.getItem("src")==="user"?"getEfficientHistory":"getCompanyComparision",
+        token: sessionStorage.getItem("authToken"),
+        email: sessionStorage.getItem("email")
+    }).then((res)=>{
+        if(res.status === 200){
+            console.log(res.data);
+            setGraph(res.data);
+        }
+    })
     const [submitState, setSubmit] = React.useState(false);
     return(
         <Grid  container maxWidth padding={{
@@ -125,6 +138,13 @@ export default function Profile(props){
             }}>
                 <Typography variant="h5" padding={1}>
                     <b>Your Performance</b>
+                    {
+                        sessionStorage.getItem("src")==="user"?(
+                            <EfficiencyHistory data={graphData} />
+                        ):(
+                            <CompanyComparision data={graphData} />
+                        )
+                    }
                 </Typography>
                 {/* Graph conponent here */}
             </Grid>
