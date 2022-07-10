@@ -10,7 +10,7 @@ source venv/bin/activate
 pip install -r ./requirements.txt
 ```
 
-##Technologies used
+## Technologies used
 <ul>
   <li>Python</li>
   <li>pyDEA</li>
@@ -21,7 +21,7 @@ pip install -r ./requirements.txt
   <li>Flask</li>
   </ul>
  
- #Usage
+ ## Usage
  The web application has a highly interactive user interface.
  <ul>
  <li>The robust backend handles all the computations, thus all the company has to do is to CLICK !</li>
