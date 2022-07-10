@@ -193,6 +193,3 @@ def execute(request):
         if req['action'] == 'getBranch' : return getBranch(req)
         if req['action'] == 'getEfficiencyHistory': return getEfficiencyHistory(req)
     return "FAILED"
-
-freq = {"email": "branch1@TestOrg.test"}
-print(getCompanyComparision(freq))
