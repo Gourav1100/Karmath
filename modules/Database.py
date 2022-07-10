@@ -57,7 +57,7 @@ def validToken(request):
 def createUser(request):
     conn = sqlite3.connect('./db.db')
     print(request['name'])
-    fields = f"\'{request['name']}\', \'{request['company']}\', \'{request['branch']}\', \'{request['domain']}\', {request['phone']}, \'{request['email']}\',\'{request['password']}\'"
+    fields = f"'{request['name']}', '{request['company']}', '{request['branch']}', '{request['domain']}', {request['phone']}, '{request['email']}','{request['password']}'"
     print(fields)
     fieldlist = "name, company, branch, domain, phone, email, password"
     req = "INSERT INTO user(" + fieldlist + ") VALUES(" + fields + ")"
@@ -67,6 +67,7 @@ def createUser(request):
 
 def updateUser(request):
     conn = sqlite3.connect('./db.db')
+
     print(request['name'])
 
 def getUser(request):
@@ -192,4 +193,6 @@ def execute(request):
         if req['action'] == 'getUser' : return getUser(req)
         if req['action'] == 'getBranch' : return getBranch(req)
         if req['action'] == 'getEfficiencyHistory': return getEfficiencyHistory(req)
+        if req['action'] == 'getCompanyComparision': return getCompanyComparision(req)
+        if req['action'] == 'getEfficiencyComparision': return getEfficiencyComparision(req)
     return "FAILED"
