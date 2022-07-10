@@ -149,7 +149,7 @@ def getCompanyComparision(request):
 
 def getEfficiencyComparision(request):
     conn = sqlite3.connect('./db.db')
-    cursor = conn.execute(f"SELECT efficiency FROM history WHERE email='{request['email']}' ORDER BY date DSC LIMIT 1")
+    cursor = conn.execute(f"SELECT efficiency FROM history WHERE email='{request['email']}' ORDER BY date DESC LIMIT 1")
     cursor = cursor.fetchone()
     myeff = cursor[0]
     cursor = conn.execute(f"SELECT branch, company FROM user WHERE email='{request['email']}'")
@@ -158,25 +158,26 @@ def getEfficiencyComparision(request):
     company = cursor[1]
     comp = company + "_" + branch
     arr = []
-    cursor = conn.execute(f"SELECT efficiency FROM {comp} WHERE efficiency<{myeff}")
-    cursor.fetchall()
+    cursor = conn.execute(f"SELECT efficiency FROM {comp} WHERE efficiency<{myeff} ORDER BY efficiency ASC")
+    cursor = cursor.fetchall()
     i = 0
     while i < len(cursor):
         d = {"EmpID" : i, "Efficiency": cursor[i][0]}
         arr.append(d)
         i += 1
-    dic = {"EmpID": i, "Efficiency": myeff, "rng" : 5}
+    dic = {"EmpID": i, "Efficiency": myeff}
     arr.append(dic)
+    x = i
     i +=1
     j = 0
-    cursor = conn.execute(f"SELECT efficiency FROM {comp} WHERE efficiency > {myeff}")
-    cursor.fetchall()
+    cursor = conn.execute(f"SELECT efficiency FROM {comp} WHERE efficiency > {myeff} ORDER BY efficiency ASC")
+    cursor = cursor.fetchall()
     while j < len(cursor):
-        d = {"EmpID" : i, "Efficiency": cursor[i][0]}
+        d = {"EmpID" : i, "Efficiency": cursor[j][0]}
         arr.append(d)
         i += 1
         j += 1
-    dict = {"data": arr}
+    dict = {"data": arr, "you": [{"EmpID": x, "Efficiency": myeff, "rng" : 5}]}
     return json.dumps(dict)
 
 def execute(request):
@@ -193,4 +194,5 @@ def execute(request):
         if req['action'] == 'getEfficiencyHistory': return getEfficiencyHistory(req)
     return "FAILED"
 
-
+freq = {"email": "branch1@TestOrg.test"}
+print(getCompanyComparision(freq))
