@@ -106,7 +106,7 @@ def getBranch(request):
     cursor = cursor.fetchall()
     if(len(cursor) == 0): return 'Branch does not exist', 404
     dict = {
-        'Name' : cursor[0][0],
+        'Branch' : cursor[0][0],
         'Company': cursor[0][1],
         'Email': cursor[0][2]
     }
