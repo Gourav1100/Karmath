@@ -48,22 +48,47 @@ const Dashboard = () => {
     }
     // authenticate user
     {/* authentication request here */}
-    if( auth === false){
-        axios.post("http://localhost:5000/api/Database",{
-            action: "getUser",
-            email: sessionStorage.getItem("email"),
-            token: sessionStorage.getItem("authToken"),
-        }).then((res)=>{
-            if(res.status === 200){
-                setAuth(true);
-                setUserdata(res.data);
-            }
-            else if(res.status === 401){
-                sessionStorage.clear();
-                window.location.replace("/");
-                return (<>Unauthenticated Access!!</>)
-            }
-        });
+    if( auth === false ){
+        if(sessionStorage.getItem('src') === "user"){
+            axios.post("http://localhost:5000/api/Database",{
+                action: "getUser",
+                email: sessionStorage.getItem("email"),
+                token: sessionStorage.getItem("authToken"),
+            }).then((res)=>{
+                console.log(res.status)
+                if(res.status === 200){
+                    setAuth(true);
+                    setUserdata(res.data);
+                }
+                else {
+                    sessionStorage.clear();
+                    window.location.replace("/");
+                    return (<>Unauthenticated Access!!</>)
+                }
+            });
+        }
+        else if(sessionStorage.getItem('src') === "branch"){
+            axios.post("http://localhost:5000/api/Database",{
+                action: "getBranch",
+                email: sessionStorage.getItem("email"),
+                token: sessionStorage.getItem("authToken"),
+            }).then((res)=>{
+                if(res.status === 200){
+                    setAuth(true);
+                    setUserdata(res.data);
+                }
+                else{
+                    sessionStorage.clear();
+                    window.location.replace("/");
+                    return (<>Unauthenticated Access!!</>)
+                }
+            });
+        }
+        else {
+            sessionStorage.clear();
+            window.location.replace("/");
+            return (<>Unauthenticated Access!!</>)
+        }
         return (<>Authentication in process please wait.</>);
     }
     // handler functions
