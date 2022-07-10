@@ -81,7 +81,8 @@ def getUser(request):
 
 def createBranch(request):
     conn = sqlite3.connect('./db.db')
-    fields = f"\'{request['name']}\', \'{request['company']}\', \'{request['email']}\',\'{request['password']}\'"
+    print(request)
+    fields = f"'{request['name']}', '{request['company']}', '{request['email']}','{request['password']}'"
     fieldlist = "name, company, email, password"
     req = "INSERT INTO branch(" + fieldlist + ") VALUES(" + fields + ")"
     conn.execute(req)
