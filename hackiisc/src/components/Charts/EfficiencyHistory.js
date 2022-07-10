@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import { LineChart, Line, Legend, CartesianGrid, Tooltip, XAxis, YAxis, ReferenceLine } from "recharts";
 
 const dateFormat = (tick) => {

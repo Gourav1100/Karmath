@@ -1,4 +1,3 @@
-#!/bin/sh
 cd ./ExecuteDEA
 source environment/bin/activate
 python DEA.py

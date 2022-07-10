@@ -60,17 +60,22 @@ export default function Profile(props){
         event.preventDefault();
         console.log(event.target);
     }
+    const [isSet, setStatus] = React.useState(false);
     const [graphData, setGraph] = React.useState([])
-    axios.post("http://localhost:5000/api/Database",{
-        action: sessionStorage.getItem("src")==="user"?"getEfficientHistory":"getCompanyComparision",
-        token: sessionStorage.getItem("authToken"),
-        email: sessionStorage.getItem("email")
-    }).then((res)=>{
-        if(res.status === 200){
-            console.log(res.data);
-            setGraph(res.data);
-        }
-    })
+    if(isSet === false){
+        console.log(graphData)
+        axios.post("http://localhost:5000/api/Database",{
+            action: sessionStorage.getItem("src")==="user"?"getEfficiencyHistory":"getCompanyComparision",
+            token: sessionStorage.getItem("authToken"),
+            email: sessionStorage.getItem("email")
+        }).then((res)=>{
+            if(res.status === 200){
+                console.log(res.data);
+                setGraph(res.data);
+                setStatus(true);
+            }
+        })
+    }
     const [submitState, setSubmit] = React.useState(false);
     return(
         <Grid  container maxWidth padding={{

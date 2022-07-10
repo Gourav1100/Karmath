@@ -30,6 +30,7 @@ import PerformanceForm from "../components/PerformanceForm/PerformanceForm";
 import styles from "./Dashboard.module.css";
 import Footer from "../components/Footer/Footer";
 import axios from "axios";
+import Progress from "../components/progress/progress";
 
 const Dashboard = () => {
     // set variables and hooks
@@ -114,7 +115,7 @@ const Dashboard = () => {
     const locations = {
         'Home': [<HomeOutlinedIcon />, ""],
         'My Profile': [<PersonOutlineIcon />, <Profile userdata = {userdata} />],
-        'My Progess' : [<WorkOutlineIcon />, "You Progress"],
+        'My Progess' : [<WorkOutlineIcon />, <Progress />],
         'Evaluate your Performance' : [<BarChartIcon />, <PerformanceForm type={sessionStorage.getItem('src')==="branch"?'Company':'Employee'} /> ],
         'Logout' : [<LogoutIcon />, ""]
     };
