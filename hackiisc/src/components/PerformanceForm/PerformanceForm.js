@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import UploadFile from "@mui/icons-material/UploadFile";
+import axios from "axios";
 
 const params = [
   "EmployeeID",
@@ -26,9 +28,18 @@ export default function PerformanceForm(props) {
     event.preventDefault();
     console.log(event);
   };
-//   const [submitState, setSubmit] = React.useState(false);
+  const handleFile = (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append(
+      "csv",
+      file,
+      file.name
+    );
+    axios.post("http://localhost:5000/api/uploadFile", formData).then(res=>console.log);
+  }
   return (
-    
+
     <>
     <h2>Need help in improvement.<a style= {{color: "grey"}} href="/resources" >Click here</a></h2>
       {(props.type === "Employee")?(
@@ -70,7 +81,7 @@ export default function PerformanceForm(props) {
                   >
                     Submit
                   </Button>
-                
+
               </Grid>
             </Grid>
             </form>
@@ -91,7 +102,7 @@ export default function PerformanceForm(props) {
         style = {{margin: "1% 0% 1% 45%"}}
       >
         Upload CSV
-        <input type="file" accept=".csv" hidden onChange="" />
+        <input type="file" accept=".csv" hidden onChange={handleFile} />
       </Button>
       <Typography variant="h5" padding={1} style={{textAlign: "center", padding:"20px", paddingBottom: "31px"}}>
           <b>Upload file of your employees with the values of parameters</b>

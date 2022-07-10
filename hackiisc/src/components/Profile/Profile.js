@@ -84,7 +84,7 @@ export default function Profile(props){
                         md: 3,
                         lg: 5,
                     }} sx={{display: "flex"}} alignContent="center" justifyContent="center">
-                        <Avatar sx={{ width: 200, height: 200, bgcolor: stringToColor(props.userdata?props.userdata.Name:"T") }}>{props.userdata?props.userdata.Name[0]:"T"}</Avatar>
+                        <Avatar sx={{ width: 200, height: 200, bgcolor: stringToColor(props.userdata?(props.userdata.Name?props.userdata.Name:props.userdata.Branch):"T") }}>{props.userdata?(props.userdata.Name?props.userdata.Name[0]:props.userdata.Branch[0]):"T"}</Avatar>
                     </Grid>
                     <Grid item xs={12} md={8} padding={{
                         xs: 2,

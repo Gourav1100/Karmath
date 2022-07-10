@@ -55,7 +55,6 @@ const Dashboard = () => {
                 email: sessionStorage.getItem("email"),
                 token: sessionStorage.getItem("authToken"),
             }).then((res)=>{
-                console.log(res.status)
                 if(res.status === 200){
                     setAuth(true);
                     setUserdata(res.data);
@@ -116,7 +115,7 @@ const Dashboard = () => {
         'Home': [<HomeOutlinedIcon />, ""],
         'My Profile': [<PersonOutlineIcon />, <Profile userdata = {userdata} />],
         'My Progess' : [<WorkOutlineIcon />, "You Progress"],
-        'Evaluate your Performance' : [<BarChartIcon />, <PerformanceForm type="Employee" /> ],
+        'Evaluate your Performance' : [<BarChartIcon />, <PerformanceForm type={sessionStorage.getItem('src')==="branch"?'Company':'Employee'} /> ],
         'Logout' : [<LogoutIcon />, ""]
     };
     return (

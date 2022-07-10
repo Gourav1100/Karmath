@@ -20,10 +20,10 @@ function Login() {
       password: password,
     }).then((res)=>{
       if(res.data && res.status === 200){
-        console.log(res.data);
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("loginStatus", true);
-        sessionStorage.setItem("authToken", res.data);
+        sessionStorage.setItem("authToken", res.data.token);
+        sessionStorage.setItem("src", res.data.src);
         window.location.replace("/dashboard");
       }
       else if(res.status === 401){
