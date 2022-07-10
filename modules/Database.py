@@ -20,7 +20,10 @@ def insertToken(request):
     password = request['password']
     cursor = conn.execute("SELECT password FROM user WHERE email=\'" + email + '\'')
     cursor = cursor.fetchall()
-    if len(cursor) == 0: return 'User not Found!', 404
+    if len(cursor) == 0:
+        cursor = conn.execute("SELECT password FROM branch WHERE email=\'" + email + '\'')
+        cursor = cursor.fetchall()
+        if len(cursor) == 0:  return 'User not Found!', 404
     if cursor[0][0] != password: return 'Incorrect! Password', 401
     token = Oauth.getToken()
     cursor = conn.execute("SELECT * FROM validtokens WHERE token=\"" + str(token)+'\"')
@@ -81,7 +84,6 @@ def getUser(request):
 
 def createBranch(request):
     conn = sqlite3.connect('./db.db')
-    print(request)
     fields = f"'{request['name']}', '{request['company']}', '{request['email']}','{request['password']}'"
     fieldlist = "name, company, email, password"
     req = "INSERT INTO branch(" + fieldlist + ") VALUES(" + fields + ")"
