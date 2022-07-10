@@ -24,15 +24,6 @@ function stringToColor(string) {
     return color;
 }
 
-function stringAvatar(name) {
-    return {
-        sx: {
-        bgcolor: stringToColor(name),
-        },
-        children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-    };
-}
-
 function capitalize( value){
     let str = `${value}`.toLowerCase();
     return str.slice(0,1).toUpperCase() + str.slice(1);
@@ -49,7 +40,7 @@ export default function Profile(props){
         'Email' : "text",
         'Password' : "password",
         'Company' : "text",
-        'Location' : "text",
+        'Branch' : "text",
     }
     const HandleInput = (event) => {
         let elements = document.getElementsByClassName("ProfileInputs");
@@ -65,7 +56,7 @@ export default function Profile(props){
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(event);
+        console.log(event.target);
     }
     const [submitState, setSubmit] = React.useState(false);
     return(
@@ -93,9 +84,7 @@ export default function Profile(props){
                         md: 3,
                         lg: 5,
                     }} sx={{display: "flex"}} alignContent="center" justifyContent="center">
-                        <Avatar {...stringAvatar(props.userdata?props.userdata.username:"Test User")}
-                            sx={{ width: 200, height: 200 }}
-                        />
+                        <Avatar sx={{ width: 200, height: 200, bgcolor: stringToColor(props.userdata?props.userdata.Name:"T") }}>{props.userdata?props.userdata.Name[0]:"T"}</Avatar>
                     </Grid>
                     <Grid item xs={12} md={8} padding={{
                         xs: 2,
@@ -153,7 +142,7 @@ export default function Profile(props){
                 <form style={{width: "100%"}}>
                     <Grid container maxWidth sx={{display: "flex"}} justifyContent="center" alignContent="center">
                         {
-                        Object.keys(props.userdata?props.userdata:formArray).map((key, index) =>{
+                        Object.keys(formArray).map((key, index) =>{
                             return(
                                 <Grid item sx={12} md={6} lg={4} padding={1} key={key}>
                                     <TextField className="ProfileInputs" name={key} type={formArray[key]} sx={{width: "100%"}}  onKeyUp={HandleInput} label={key} variant="outlined" />

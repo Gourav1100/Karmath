@@ -7,15 +7,13 @@ sys.path.insert(0, './modules')
 # create flask app
 app = Flask(__name__)
 # enable cors
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app, resources={r'/api/*': {'origins': "*"}})
 # enable file upload
 UPLOAD_FOLDER = "./ExecuteDEA/"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # define dynamic routing
 @app.route("/api/<api>", methods=["GET", "POST"])
-@cross_origin()
 def executeAPI(api):
     try:
         apiHandler = __import__(api)

@@ -25,7 +25,7 @@ class App extends Component {
             <Route exact path='/resources'  element = {(<><Resources/><Footer /></>)}> </Route>
           </Routes>
       </Router>
-      
+
     );
   }
 

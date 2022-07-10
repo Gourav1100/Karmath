@@ -14,13 +14,13 @@ import json
 
 
 def insertToken(request):
-    
+
     conn = sqlite3.connect('./db.db')
     email = request['email']
     password = request['password']
     cursor = conn.execute("SELECT password FROM user WHERE email=\'" + email + '\'')
     cursor = cursor.fetchall()
-    if len(cursor) == 0: return 'User not Found!', 404 
+    if len(cursor) == 0: return 'User not Found!', 404
     if cursor[0][0] != password: return 'Incorrect! Password', 401
     token = Oauth.getToken()
     cursor = conn.execute("SELECT * FROM validtokens WHERE token=\"" + str(token)+'\"')
@@ -174,9 +174,8 @@ def getEfficiencyComparision(request):
     return json.dumps(dict)
 
 def execute(request):
-    print(request)
     req = request.get_json(force=True)
-    print(req['action'])
+    print(request)
     if(req['action'] == "auth"):
         return insertToken(req)
     if req['action'] == 'createUser': return createUser(req)
@@ -189,4 +188,3 @@ def execute(request):
     return "FAILED"
 
 
-    

@@ -12,17 +12,29 @@ function Login() {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
+    event.target.email.value = "";
+    event.target.password.value = "";
     axios.post("http://localhost:5000/api/Database",{
-      data: {
-        action: "auth",
-        email: email,
-        password: password,
-      }
+      action: "auth",
+      email: email,
+      password: password,
     }).then((res)=>{
-      console.log(res);
+      if(res.data && res.status === 200){
+        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("loginStatus", true);
+        sessionStorage.setItem("authToken", res.data);
+        window.location.replace("/dashboard");
+      }
+      else if(res.status === 401){
+        alert("Invalid user details!");
+        sessionStorage.clear();
+      }
     })
   };
-
+  let status = sessionStorage.getItem("loginStatus")
+  if(status === 'true'){
+    window.location.replace("/dashboard")
+  }
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.center}>
@@ -52,7 +64,7 @@ function Login() {
             }}
           />
 
-          <Button 
+          <Button
           type="submit"
           variant="contained"
           style ={{
@@ -62,7 +74,7 @@ function Login() {
           >
             Sign IN
           </Button>
-          <Button 
+          <Button
           variant="contained"
           style ={{
             width: "70%",
@@ -71,7 +83,7 @@ function Login() {
           >
             <Link to="/registercompany" style={{ textDecoration: 'none', color: 'white' }}>Register as Company</Link>
           </Button>
-          <Button 
+          <Button
           variant="contained"
           style ={{
             width: "70%",
