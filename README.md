@@ -1,5 +1,6 @@
 # Karmath
 A Machine learning model to predict the efficiency of employees in workspace. The prediction is based on 11 parameters namely- Experience(yrs),TaskAssigned,TaskCompleted,DeadlinesMet,DeadlinesMissed,number of EOM(Employee of the month) ,EOM points (agg) ,EOY(points),Manager Score,Holidays Taken,Number of hours overtime. 
+<br>
 The ML model is based on neural network using Data Envelopment Analysis (DEA) which is based on Linear Programming. The user interactions are handled from react based interactive user interface. 
 <br>
 ## Dependencies
