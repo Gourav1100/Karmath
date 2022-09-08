@@ -28,7 +28,7 @@ pip install -r ./requirements.txt
  ## Usage
  The web application has a highly interactive user interface.
  <ul>
- <li>The robust backend handles all the computations, thus all the company has to do is to CLICK !</li>
+ <li>The robust backend handles all the computations, thus all the company has to do is to CLICK !!</li>
  <li>The performance is presented in the form of interactive charts.</li>
   <li>Maintaining a curated resource list on how to fill performance reports and how to grow as a developer.</li>
   </ul>
